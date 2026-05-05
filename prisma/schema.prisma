@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db{
+  provider = "mysql"
+  // url = env("DATABASE_URL")
+}
+
+
+/// ==================================================================================
+//
+///   ENTIDADE DE USUÁRIOS
+//   É o ponto de entrada. Usei UUID para os IDs para garantir segurança (evitando que IDs sequenciais sejam expostos em URLs).
+//   O campo email possui uma constraint @unique para garantir que não existam duplicatas.
+// ==================================================================================
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  projects Project[]
+  createdAt DateTime @default(now())
+}
+
+/// ==================================================================================
+//
+///   ENTIDADE DE PROJETOS
+//    Serve como um "container". Um usuário pode ter vários projetos, permitindo separar links por contextos (Ex: "Redes Sociais", "Campanha de Natal").
+// ==================================================================================
+
+
+model Project {
+  id String @id @default(uuid())
+  name String
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  link Link[]
+  createdAt DateTime @default(now())
+}
+
+
+/// ==================================================================================
+//
+///   ENTIDADE DE Links
+// É a unidade central. Cada link pertence a um projeto (1:N). Ela armazena o baseUrl, que é o destino principal antes de qualquer manipulação de parâmetros.
+// ==================================================================================
+
+
+model Link {
+  id String @id @default(uuid())
+  name String
+  projectId String
+  project Project @relation(fields: [projectId], references: [id])
+  parameters String
+  redirect Redirect?
+  createdAt DateTime @default(now())
+
+  linkParameters LinkParameter[]
+}
+
+
+/// ==================================================================================
+//
+///   ENTIDADE DE Parâmetros
+//  Relacionamento Muitos-para-Muitos (N:N): Esta é a parte mais sofisticada da modelagem.
+// Em vez de fixar colunas de parâmetros no Link, criei uma entidade Parameter
+// A tabela intermediária LinkParameter permite que vários links compartilhem os mesmos parâmetros (como uma utm_source=google) ou que um link tenha múltiplos parâmetros associados.
+// ==================================================================================
+
+
+model Parameter {
+  id String @id @default(uuid())
+  name String
+  value String
+  links LinkParameter[]
+  createdAt DateTime @default(now())
+}
+
+
+model LinkParameter {
+  linkId String
+  parameterId String
+  link Link @relation(fields: [linkId], references: [id])
+  parameter Parameter @relation(fields: [parameterId], references: [id])
+
+  @@id([linkId, parameterId])
+}
+
+
+/// ==================================================================================
+//
+///   ENTIDADE DE Redirecionamento
+// Um-para-Um (1:1): A entidade Redirect está ligada de forma única a um Link
+// Modelei isso separadamente para permitir que o sistema tenha um "histórico" ou uma "configuração de destino" específica que pode ser alterada sem mexer na estrutura base do link original.
+// ==================================================================================
+
+model Redirect {
+  id String @id @default(uuid())
+  url String
+  linkId String @unique
+  link Link @relation(fields: [linkId], references: [id])
+}
+
+
