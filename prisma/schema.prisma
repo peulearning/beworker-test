@@ -4,7 +4,7 @@ generator client {
 
 datasource db{
   provider = "mysql"
-  // url = env("DATABASE_URL")
+  url = env("DATABASE_URL")
 }
 
 
@@ -36,7 +36,7 @@ model Project {
   name String
   userId String
   user User @relation(fields: [userId], references: [id])
-  link Link[]
+  links Link[]
   createdAt DateTime @default(now())
 }
 
@@ -53,7 +53,7 @@ model Link {
   name String
   projectId String
   project Project @relation(fields: [projectId], references: [id])
-  parameters String
+
   redirect Redirect?
   createdAt DateTime @default(now())
 
