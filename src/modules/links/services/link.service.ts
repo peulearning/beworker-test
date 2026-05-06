@@ -8,7 +8,7 @@ export class LinkService {
     baseUrl: string;
     projectId: string;
   }) {
-    
+
     const project = await prisma.project.findFirst({
       where: {
         id: data.projectId,
@@ -47,4 +47,70 @@ export class LinkService {
       },
     });
   }
+
+
+  async setRedirect(userId: string, linkId: string, url: string) {
+    const link = await prisma.link.findFirst({
+      where: {
+        id: linkId,
+        project: {
+          userId,
+        },
+      },
+    });
+
+    if (!link) {
+      throw new Error('Link não encontrado ou não pertence ao usuário');
+    }
+
+    return prisma.redirect.upsert({
+      where: { linkId },
+      update: { url },
+      create: {
+        linkId,
+        url,
+      },
+    });
+  }
+
+  async generate(userId: string, linkId: string) {
+    const link = await prisma.link.findFirst({
+      where: {
+        id: linkId,
+        project: {
+          userId,
+        },
+      },
+      include: {
+        linkParameters: {
+          include: {
+            parameter: true,
+          },
+        },
+        redirect: true,
+      },
+    });
+
+    if (!link) {
+      throw new Error('Link não encontrado');
+    }
+
+    // 🔗 monta parâmetros
+    const params = link.linkParameters
+      .map(lp => `${lp.parameter.name}=${lp.parameter.value}`)
+      .join('&');
+
+    let finalUrl = link.baseUrl;
+
+    if (params) {
+      finalUrl += `?${params}`;
+    }
+
+    return {
+      finalUrl,
+      redirectTo: link.redirect?.url || null,
+    };
+  }
+
 }
+

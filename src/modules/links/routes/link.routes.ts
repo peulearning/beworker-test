@@ -8,4 +8,5 @@ const controller = new LinkController();
 router.post('/', authMiddleware, controller.create);
 router.get('/', authMiddleware, controller.list);
 
+
 export default router;
