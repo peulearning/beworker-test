@@ -2,6 +2,7 @@ import express from 'express'; // Importando o framework Express para criar o se
 import cors from 'cors'; // Importando o middleware CORS para permitir requisições de diferentes origens
 import authRoutes from './modules/users/routes/auth.routes'; // Importando as rotas de autenticação
 import projectRoutes from './modules/projects/routes/project.routes';
+import linkRoutes from './modules/links/routes/link.routes';
 
 
 const app = express(); // Criando uma instância do aplicativo Express
@@ -15,7 +16,7 @@ app.get('/', (req, res)=> {
 
 app.use('/auth', authRoutes); // Registrando as rotas de autenticação
 app.use('/projects', projectRoutes);
-
+app.use('/links', linkRoutes); // Registrando as rotas de links
 
 export default app;
 
