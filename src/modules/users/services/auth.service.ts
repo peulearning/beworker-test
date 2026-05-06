@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client';
-import { sign } from 'jsonwebtoken';
-import { authconfig } from '../../../config/auth';
+import { PrismaClient } from "@prisma/client";
+import { sign } from "jsonwebtoken";
+import { authconfig } from "../../../config/auth";
 
 const prisma = new PrismaClient();
 
@@ -11,7 +11,7 @@ export class AuthService {
     });
 
     if (userExists) {
-      throw new Error('Usuário já existe');
+      throw new Error("Usuário já existe");
     }
 
     const user = await prisma.user.create({
@@ -27,14 +27,12 @@ export class AuthService {
     });
 
     if (!user || user.password !== data.password) {
-      throw new Error('Credenciais inválidas');
+      throw new Error("Credenciais inválidas");
     }
 
-const token = sign(
-      { userId: user.id },
-      authconfig.jwt.secret,
-      { expiresIn: authconfig.jwt.expireIn }
-    );
+    const token = sign({ userId: user.id }, authconfig.jwt.secret, {
+      expiresIn: authconfig.jwt.expireIn,
+    });
 
     return { token };
   }
