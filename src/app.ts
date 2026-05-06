@@ -3,6 +3,7 @@ import cors from 'cors'; // Importando o middleware CORS para permitir requisiç
 import authRoutes from './modules/users/routes/auth.routes'; // Importando as rotas de autenticação
 import projectRoutes from './modules/projects/routes/project.routes';
 import linkRoutes from './modules/links/routes/link.routes';
+import parameterRoutes from './modules/parameters/routes/parameter.routes';
 
 
 const app = express(); // Criando uma instância do aplicativo Express
@@ -17,6 +18,9 @@ app.get('/', (req, res)=> {
 app.use('/auth', authRoutes); // Registrando as rotas de autenticação
 app.use('/projects', projectRoutes);
 app.use('/links', linkRoutes); // Registrando as rotas de links
+app.use('/parameters', parameterRoutes);
+
+
 
 export default app;
 
