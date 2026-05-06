@@ -11,6 +11,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   },
@@ -23,6 +24,6 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "prisma": {
-  "seed": "ts-node prisma/seed.ts"
-}
+    "seed": "ts-node prisma/seed.ts"
+  }
 }
