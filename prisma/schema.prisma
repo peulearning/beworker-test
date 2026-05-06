@@ -53,7 +53,7 @@ model Link {
   name String
   projectId String
   project Project @relation(fields: [projectId], references: [id])
-
+  baseUrl String
   redirect Redirect?
   createdAt DateTime @default(now())
 
