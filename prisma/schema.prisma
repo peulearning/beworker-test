@@ -66,6 +66,7 @@ model Link {
 ///   ENTIDADE DE Parâmetros
 //  Relacionamento Muitos-para-Muitos (N:N): Esta é a parte mais sofisticada da modelagem.
 // Em vez de fixar colunas de parâmetros no Link, criei uma entidade Parameter
+
 // A tabela intermediária LinkParameter permite que vários links compartilhem os mesmos parâmetros (como uma utm_source=google) ou que um link tenha múltiplos parâmetros associados.
 // Isso economiza espaço no banco e facilita relatórios globais por parâmetros.
 // ==================================================================================
