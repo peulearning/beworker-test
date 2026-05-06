@@ -23,4 +23,20 @@ export class LinkController {
 
     return res.json(links);
   }
+
+  async generate(req: Request, res: Response) {
+    const userId = (req as any).userId;
+    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+
+    const { finalUrl, redirectTo } = await service.generate(userId, id);
+
+    // 🎯 AQUI acontece o redirect real
+    if (redirectTo) {
+      return res.redirect(302, redirectTo);
+    }
+
+    return res.json({ url: finalUrl });
+}
+
+
 }

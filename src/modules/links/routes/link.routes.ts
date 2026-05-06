@@ -7,6 +7,6 @@ const controller = new LinkController();
 
 router.post('/', authMiddleware, controller.create);
 router.get('/', authMiddleware, controller.list);
-
+router.get('/:id/generate', authMiddleware, controller.generate);
 
 export default router;

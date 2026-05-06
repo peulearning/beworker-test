@@ -49,6 +49,9 @@ export class LinkService {
   }
 
 
+ // ===================  EVOLUINDO AQUI ===========================
+
+
   async setRedirect(userId: string, linkId: string, url: string) {
     const link = await prisma.link.findFirst({
       where: {
