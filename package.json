@@ -17,14 +17,14 @@
     "ts-node-dev": "^2.0.0",
     "typescript": "^6.0.3"
   },
- "scripts": {
-  "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-  "build": "tsc",
-  "start": "node dist/server.js",
-  "prisma:dev": "prisma migrate dev",
-  "prisma:studio": "prisma studio",
-  "seed": "ts-node prisma/seed.ts",
- },
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "prisma:dev": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "seed": "ts-node prisma/seed.ts"
+  },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   }
