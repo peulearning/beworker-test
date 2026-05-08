@@ -4,8 +4,7 @@ import authRoutes from './modules/users/routes/auth.routes'; // Importando as ro
 import projectRoutes from './modules/projects/routes/project.routes';
 import linkRoutes from './modules/links/routes/link.routes';
 import parameterRoutes from './modules/parameters/routes/parameter.routes';
-import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./config/swagger";
+
 
 
 const app = express(); // Criando uma instância do aplicativo Express
@@ -21,7 +20,6 @@ app.use('/auth', authRoutes); // Registrando as rotas de autenticação
 app.use('/projects', projectRoutes);
 app.use('/links', linkRoutes); // Registrando as rotas de links
 app.use('/parameters', parameterRoutes);
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 export default app;

@@ -30,8 +30,11 @@ export class AuthService {
       throw new Error("Credenciais inválidas");
     }
 
-    const token = sign({ userId: user.id }, authconfig.jwt.secret, {
-      expiresIn: authconfig.jwt.expireIn,
+    const token = sign(
+  { userId: user.id },
+  authconfig.jwt.secret as string,
+  {
+    expiresIn: authconfig.jwt.expireIn as any,
     });
 
     return { token };
