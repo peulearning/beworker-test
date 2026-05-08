@@ -24,8 +24,8 @@
     "start": "node dist/server.js",
     "prisma:dev": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "seed": "ts-node prisma/seed.ts",
-   
+    "seed": "ts-node prisma/seed.ts"
+
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
