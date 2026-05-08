@@ -100,7 +100,7 @@ export class LinkService {
 
     // 🔗 monta parâmetros
     const params = link.linkParameters
-      .map(lp => `${lp.parameter.name}=${lp.parameter.value}`)
+      .map((lp: any) => `${lp.parameter.name}=${lp.parameter.value}`)
       .join('&');
 
     let finalUrl = link.baseUrl;
