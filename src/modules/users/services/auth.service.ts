@@ -1,13 +1,19 @@
 import { PrismaClient } from "@prisma/client";
-import { sign } from "jsonwebtoken";
+import jwt, { Secret, SignOptions } from "jsonwebtoken";
 import { authconfig } from "../../../config/auth";
 
 const prisma = new PrismaClient();
 
 export class AuthService {
-  async register(data: { name: string; email: string; password: string }) {
+  async register(data: {
+    name: string;
+    email: string;
+    password: string;
+  }) {
     const userExists = await prisma.user.findUnique({
-      where: { email: data.email },
+      where: {
+        email: data.email,
+      },
     });
 
     if (userExists) {
@@ -21,18 +27,33 @@ export class AuthService {
     return user;
   }
 
-  async login(data: { email: string; password: string }) {
+  async login(data: {
+    email: string;
+    password: string;
+  }) {
     const user = await prisma.user.findUnique({
-      where: { email: data.email },
+      where: {
+        email: data.email,
+      },
     });
 
     if (!user || user.password !== data.password) {
       throw new Error("Credenciais inválidas");
     }
 
-    const token = sign({ userId: user.id }, authconfig.jwt.secret, {
-      expiresIn: authconfig.jwt.expireIn,
-    });
+    const secret: Secret = authconfig.jwt.secret;
+
+    const options: SignOptions = {
+      expiresIn: "1d",
+    };
+
+    const token = jwt.sign(
+      {
+        userId: user.id,
+      },
+      secret,
+      options
+    );
 
     return { token };
   }

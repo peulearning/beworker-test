@@ -6,6 +6,7 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "prisma": "^5.22.0",
+    "swagger-jsdoc": "^6.2.8",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -23,9 +24,13 @@
     "start": "node dist/server.js",
     "prisma:dev": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts",
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }

@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const link_controller_1 = require("../controllers/link.controller");
+const auth_middlewares_1 = require("../../../shared/middlewares/auth.middlewares");
+const router = (0, express_1.Router)();
+const controller = new link_controller_1.LinkController();
+router.post('/', auth_middlewares_1.authMiddleware, controller.create);
+router.get('/', auth_middlewares_1.authMiddleware, controller.list);
+router.get('/:id/generate', auth_middlewares_1.authMiddleware, controller.generate);
+exports.default = router;
