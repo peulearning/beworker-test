@@ -6,6 +6,7 @@ import linkRoutes from './modules/links/routes/link.routes';
 import parameterRoutes from './modules/parameters/routes/parameter.routes';
 
 
+
 const app = express(); // Criando uma instância do aplicativo Express
 
 app.use(cors()); // Habilitando o CORS para todas as rotas
@@ -19,7 +20,6 @@ app.use('/auth', authRoutes); // Registrando as rotas de autenticação
 app.use('/projects', projectRoutes);
 app.use('/links', linkRoutes); // Registrando as rotas de links
 app.use('/parameters', parameterRoutes);
-
 
 
 export default app;
